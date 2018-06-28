@@ -28,8 +28,9 @@ router.post('/', (req,res) => {
 // THIS IS MY DELETE ID//
 router.delete('/:id', (req,res) =>{
     let id = req.params.id;
-        chirpsStore.DeleteChirp(id)
-        res.sendStatus(200)
+    
+    chirpsStore.DeleteChirp(id);
+    res.sendStatus(200)
     
 
     
@@ -37,6 +38,11 @@ router.delete('/:id', (req,res) =>{
 // THIS IS MY UPDATED//
 router.put('/:id?', (req, res) => {
     let id = req.params.id;
+    let chirp = chirpsStore.GetChirp(id);
+
+    if (!chirp || Object.keys(chirp).length === 0) {
+        return res.sendStatus(404);
+    }
     chirpsStore.UpdateChirp(id, req.body)
     res.sendStatus(200);
 })
