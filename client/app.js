@@ -10,14 +10,10 @@ $(document).ready(function() {
       let info = Object.values(data);
       console.log(info);
       info.forEach(element => {
-        if (info.indexOf(element) === -1){
-          info.push(indexs);
-          console.log('new id:' + indexs)
-        }//else if (info.indexof(element)> -1){
-        //   console.log(element + 'already exist');
-        // }
-       console.log(element)
-        
+        console.log(element)
+        console.log(indexs[info.indexOf(element)])
+
+      
       });
 
       // for (let key of keys){
