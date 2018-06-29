@@ -16,12 +16,9 @@ router.get('/:id?', (req, res)=> {
 });
 // THIS WILL POST ANY CREATED CHIRPS//
 router.post('/', (req,res) => {
-    chirpsStore.CreateChirp(req.body);
-    res.sendStatus(200);
+    let test = req.body
+    res.json(chirpsStore.CreateChirp(test))
     
-    let post = () =>{
-        console
-    }
 
 
 })
@@ -38,11 +35,6 @@ router.delete('/:id', (req,res) =>{
 // THIS IS MY UPDATED//
 router.put('/:id?', (req, res) => {
     let id = req.params.id;
-    let chirp = chirpsStore.GetChirp(id);
-
-    if (!chirp || Object.keys(chirp).length === 0) {
-        return res.sendStatus(404);
-    }
     chirpsStore.UpdateChirp(id, req.body)
     res.sendStatus(200);
 })

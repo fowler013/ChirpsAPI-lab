@@ -1,3 +1,62 @@
+$('#editmodal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget)
+  var recipient = button.data('whatever')
+  console.log(recipient) 
+  var modal = $(this)
+  modal.find('.modal-title').text('Chirp: #' + recipient)
+
+  //this is the edit button function//
+$(`#edit`).click(() => {
+console.log($(`#message-text`).val())
+console.log($(`#user${recipient}`).html())
+let chirp = {
+  user: $(`#user${recipient}`).html(),
+  text: $(`#message-text`).val(),
+}
+//this is the PUT(UPDATE) function//
+$.ajax({
+  type: 'PUT',
+  url: `http://localhost:3000/api/chirps/${recipient}`,
+  data: JSON.stringify(chirp),
+  contentType: 'application/json',
+  dataType: "json",
+success: (result) => {
+  console.log(result)
+  updateChirp(result,modal ,recipient)
+}
+})
+$(`#text${recipient}`).html($(`#message-text`).val())
+$(`#message-text`).val("")
+  })
+})
+
+
+function createChirp(id, chirps) {
+  console.log('this is the key',chirps);
+  $('#box').append(`<div class="card mt-5 postion-relative" id= "${id}">
+  <h5 class="card-header">New Chirp</h5>
+  <div class="card-body">
+    <h5 class="card-title" id="user${id}">${chirps.user}</h5>
+    <p class="card-text" id= "text${id}">${chirps.text}</p>
+    <a href="#" id= "btndelete${id}" class="btndelete btn btn-danger">goodbye</a>
+    <button type="button" class="btn btn-primary" id="editmodal${id}" data-toggle="modal" data-target="#editmodal" data-whatever="${id}">edit</button>
+  </div>
+</div>`)
+
+//this is the delete button function//
+$(`#btndelete${id}`).click(() => {
+  $.ajax({
+    type: 'DELETE',
+    url: `http://localhost:3000/api/chirps/${id}`,
+    success: ()=> {
+            console.log(`delete`)
+    }
+  })
+  $(`#btndelete${id}`).parent().parent().remove() 
+});
+
+}
+
 $(document).ready(function() {
     $.ajax({
         type: 'GET',
@@ -12,7 +71,10 @@ $(document).ready(function() {
       info.forEach(element => {
         console.log(element)
         console.log(indexs[info.indexOf(element)])
-
+        if(!isNaN(indexs[info.indexOf(element)])) {
+           createChirp(indexs[info.indexOf(element)], element)
+        }
+       
       
       });
 
@@ -32,91 +94,82 @@ $('#btn').on('click', function() {
     var chirps = {
         user: $("#name").val(),
         text: $("#text").val(),
-        
-
     }
-    
-    
-
-createChirp(chirps)
-  //   $("#box").append(`<div class="card mt-5">
-  //   <h5 class="card-header">New Chirp</h5>
-  //   <div class="card-body">
-  //     <h5 class="card-title">${chirps.user}</h5>
-  //     <p class="card-text">${chirps.text}</p>
-  //     <a href="#" class="btn btn-danger  ">goodbye</a>
-  //   </div>
-  // </div>`)
-
-//   $(`.btndelete`).click(() => {
-// $(".btndelete").parent().parent().remove() ;
-//   });
-
     $.ajax({
-    type: "POST",
-    url:"http://localhost:3000/api/chirps",
-    data: JSON.stringify(chirps),
-    contentType: 'application/json',
-    dataType: "json",
-    success: function createChirp(chirps) {
-    //   $('#box').append(`<div class="card">
-    //   <h5 class="card-header">New Chirp</h5>
-    //   <div class="card-body">
-    //     <h5 class="card-title">${chirps.user}</h5>
-    //     <p class="card-text">${chirps.text}</p>
-    //     <a href="#" class="btn btn-danger">goodbye</a>
-    //   </div>
-    // </div>`);
+      type: "POST",
+      url:"http://localhost:3000/api/chirps",
+      data: JSON.stringify(chirps),
+      contentType: 'application/json',
+      dataType: "json",
+    success: (result) => {
+      console.log(result)
+      createChirp(result, chirps)
   }
   });
 })
 
+// createChirp(chirps)
+//   //   $("#box").append(`<div class="card mt-5">
+//   //   <h5 class="card-header">New Chirp</h5>
+//   //   <div class="card-body">
+//   //     <h5 class="card-title">${chirps.user}</h5>
+//   //     <p class="card-text">${chirps.text}</p>
+//   //     <a href="#" class="btn btn-danger  ">goodbye</a>
+//   //   </div>
+//   // </div>`)
+
+// //   $(`.btndelete`).click(() => {
+// // $(".btndelete").parent().parent().remove() ;
+// //   });
+
+//     $.ajax({
+//     type: "POST",
+//     url:"http://localhost:3000/api/chirps",
+//     data: JSON.stringify(chirps),
+//     contentType: 'application/json',
+//     dataType: "json",
+//     success: function createChirp(chirps) {
+//     //   $('#box').append(`<div class="card">
+//     //   <h5 class="card-header">New Chirp</h5>
+//     //   <div class="card-body">
+//     //     <h5 class="card-title">${chirps.user}</h5>
+//     //     <p class="card-text">${chirps.text}</p>
+//     //     <a href="#" class="btn btn-danger">goodbye</a>
+//     //   </div>
+//     // </div>`);
+//   }
+//   });
+// })
 
 
-function createChirp(chirps) {
-  console.log('this is the key',chirps);
-  $('#box').append(`<div class="card mt-5 postion-relative">
-  <h5 class="card-header">New Chirp</h5>
-  <div class="card-body">
-    <h5 class="card-title">${chirps.user}</h5>
-    <p class="card-text">${chirps.text}</p>
-    <a href="#" id= "btndelete" class="btndelete btn btn-danger">goodbye</a>
-    <a href="#" id= "btndedit" class="btnedit btn btn-info">edit</a>
-  </div>
-</div>
 
 
 
-<div class="modal"id="editmodal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">${chirps.user}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>${chirps.text}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>`);
-//this is the delete button function//
-$(`.btndelete`).click(() => {
-  $("#btndelete").parent().parent().remove() 
-});
+// function createChirp(chirps) {
+//   console.log('this is the key',chirps);
+//   $('#box').append(`<div class="card mt-5 postion-relative">
+//   <h5 class="card-header">New Chirp</h5>
+//   <div class="card-body">
+//     <h5 class="card-title">${chirps.user}</h5>
+//     <p class="card-text">${chirps.text}</p>
+//     <a href="#" id= "btndelete" class="btndelete btn btn-danger">goodbye</a>
+//     <a href="#" id= "btndedit" class="btnedit btn btn-info">edit</a>
+//   </div>
+// </div>
 
-//this is the edit button function//
-$(`.btnedit`).click(() => {
-  $(`#editmodal`).modal('show')
-})
 
-}
+
+// //this is the delete button function//
+// $(`.btndelete`).click(() => {
+//   $("#btndelete").parent().parent().remove() 
+// });
+
+// //this is the edit button function//
+// $(`.btnedit`).click(() => {
+//   $(`#editmodal`).modal('show')
+// })
+
+// }
 
 
 

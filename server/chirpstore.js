@@ -16,11 +16,13 @@ let getChirp = id => {
 let createChirp = (chirp) => {
     chirps[chirps.nextid++] = chirp;
     writeChirps();
+   return Object.assign(chirps.nextid);
 };
 
 let updateChirp = (id, chirp) => {
     chirps[id] = chirp;
     writeChirps();
+    
 }
 
 let deleteChirp = id => {
