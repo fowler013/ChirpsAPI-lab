@@ -11,56 +11,66 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 
-<body>
-    <h1>ExpressJS API Lab</h1>
+<body class="text-center bg-secondary">
+    <div class= "text-center bg-info">
+          <h1>ExpressJS API Lab</h1>
+    </div>
+  
 
+</body>
+<div class="text-center bg-info">
 
-    <div>
-        <input id= "name" class="form-input" type="text" name="name"  placeholder="name">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <input id="name" type="text" name="name" class="form-control float" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
     </div>
     <div>
-        <textarea id= "text" class="form-input" type="text" name="text"  placeholder="text"></textarea>
-        <input id= "btn" class="btn btn-danger"type="button" value="Add Chirp" name="btn">
+        <textarea id="text" class="form-input float" type="text" name="message" placeholder="text"></textarea>
     </div>
+    <div>
+        <input id="btn" class="btn btn-danger p-2" type="button" value="Add Chirp"  name="btn">
+    </div>
+</div>
+<div class="row p-3" id="box">
 
-<div id="box" >
-    
 </div>
 <div>
     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="editmodalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="editmodalLabel">New message</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="message-text" class="col-form-label">Message:</label>
-                  <textarea class="form-control" id="message-text"></textarea>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editmodalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-              </form>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="edit" class="btn btn-primary" data-dismiss="modal">Update</button>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" id= "edit" class="btn btn-primary"data-dismiss="modal">Update</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 </div>
 
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="./app.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="./app.js"></script>
 </body>
 
 </html>
